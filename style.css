@@ -1,0 +1,176 @@
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+}
+:root {
+    --clr-background: #f5f5f5;
+    --clr-slate: #e6e6e6;
+    --clr-text: #161616;
+    --clr-text-light: #eaeaea;
+    --clr-bg: #E8D8CD;
+    --clr-accent: #A16B48;
+    --font-hero: clamp(2.2rem, 4.4vw + 1rem, 6rem);
+    --font-xl: clamp(2rem, 2.2vw + 1rem, 4rem);
+    --font-lg: clamp(1.5rem, 2vw + 1rem, 3rem);
+    --font-sm: 1rem;
+}
+h1 {
+    font-size: var(--font-hero);
+    font-weight: 800;
+}
+h2 {
+    font-size: var(--font-xl);
+}
+h3 {
+    font-size: var(--font-lg);
+}
+h4 {
+    font-weight: 500;
+}
+li {
+    list-style-type: none;
+}
+button {
+    cursor: pointer;
+}
+
+body {
+    background-color: var(--clr-background);
+    color: var(--clr-text);
+}
+
+main {
+    width: 100%;
+    height: 100%;
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 50px 1fr;
+    grid-template-areas: 
+        "app-head"
+        "task-input"
+        "task-list";
+    gap: 1rem;
+}
+section {
+    background-color: var(--clr-bg);
+    border-radius: 18px;
+}
+.app-head {
+    width: 100%;
+    height: 30vh;
+    padding: 1rem;
+    display: grid;
+    grid-area: app-head;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+.app-head div {
+    width: 100%;
+    height: 100%;
+}
+.app-head div:first-child {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.app-head div:nth-child(2) {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    border-radius: 10px;
+    background-color: var(--clr-accent);
+    color: var(--clr-text-light);
+}
+
+.add-task-area {
+    display: grid;
+    grid-template-rows: 1fr;
+    grid-template-columns: 2fr 1fr;
+}
+input[type="text"] {
+    background-color: transparent;
+    border: none;
+    border-radius: 18px 0px 0px 18px;
+    padding-inline: 0.75rem;
+    font-size: var(--font-sm);
+}
+.action-btn-list {
+    display: flex;
+}
+.action-btn-list li {
+    flex: 1;
+}
+.action-btn-list li button {
+    width: 100%;
+    height: 100%;
+    background-color: var(--clr-accent);
+    border: none;
+}
+.action-btn-list li:last-child button {
+    border-radius: 0px 18px 18px 0px;
+}
+.task-list-area {
+    width: 100%;
+    height: calc(100vh - 30vh - 114px);
+    padding: 0.75rem;
+}
+.task-list {
+    width: 100%;
+    height: 100%;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+.task-list-item {
+    width: 100%;
+    min-height: 50px;
+    height: auto;
+    border-radius: 12px;
+    background-color: var(--clr-accent);
+    color: var(--clr-text-light);
+}
+.task-head {
+    width: 100%;
+    height: 50px;
+    padding-inline-start: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.task-actions {
+    height: 100%;
+    width: 70px;
+    border-radius: 0px 12px 12px 0px;
+    background-color: #d23f3f;
+}
+.task-list-item:has(.check-list) {
+    display: grid;
+    grid-template-rows: repeat(2, auto);
+}
+.task-list-item:has(.check-list) .task-head {
+    border-block-end: 1px solid var(--clr-bg);
+}
+.task-list-item:has(.check-list) .task-actions {
+    border-radius: 0px 12px 0px 0px;
+}
+
+.check-list {
+    width: 100%;
+    padding-block: 0.5rem;
+    padding-inline-start: 1.25rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.check-list-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
