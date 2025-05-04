@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Simple ToDo App">
+    <meta name="author" content="Prateek">
+    <meta name="robots" content="index, follow">
+    <title>ToDo App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <main>
+        <section class="app-head">
+            <div><h1>TASKS FOR THE DAY</h1></div>
+            <div>
+                <h2 class="total-task">3</h2>
+                <h3 class="task-completed">0</h3>
+            </div>
+        </section>
+        <section class="add-task-area">
+            <label for="task-input" style="display: none;">Enter Task</label>
+            <input type="text" id="task-input" class="task-input-field" placeholder="New Task">
+            <ul class="action-btn-list">
+                <li><button type="button">+</button></li>
+                <li><button type="button">+</button></li>
+                <li><button type="button">+</button></li>
+            </ul>
+        </section>
+        <section class="task-list-area">
+            <ul class="task-list">
+                <li class="task-list-item">
+                    <div class="task-head">
+                        <h4 class="task">New Task 1</h4>
+                        <span class="task-actions">
+                            <button>X</button>
+                            <button>Y</button>
+                            <button>Z</button>
+                        </span>
+                    </div>
+                </li>
+                <li class="task-list-item">
+                    <div class="task-head">
+                        <h4 class="task">New Task 2</h4>
+                        <span class="task-actions">
+                            <button>X</button>
+                            <button>Y</button>
+                            <button>Z</button>
+                        </span>
+                    </div>
+                    <ul class="check-list">
+                        <li class="check-list-item">
+                            <input type="checkbox" name="user_task_checklist" id="">
+                            <label for="">New Task 2: check-list-item 1</label>
+                        </li>
+                        <li class="check-list-item">
+                            <input type="checkbox" name="user_task_checklist" id="">
+                            <label for="">New Task 2: check-list-item 2</label>
+                        </li>
+                        <li class="check-list-item">
+                            <input type="checkbox" name="user_task_checklist" id="">
+                            <label for="">New Task 2: check-list-item 3</label>
+                        </li>
+                    </ul>
+                </li>
+                <li class="task-list-item">
+                    <div class="task-head">
+                        <h4 class="task">New task 3</h4>
+                        <span class="task-actions">
+                            <button>X</button>
+                            <button>Y</button>
+                            <button>Z</button>
+                        </span>
+                    </div>
+                </li>
+            </ul>
+        </section>
+    </main>
+</body>
+</html>
