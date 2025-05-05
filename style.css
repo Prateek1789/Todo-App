@@ -35,9 +35,19 @@ li {
     list-style-type: none;
 }
 button {
+    height: 100%;
+    background-color: transparent;
+    padding: 0.25rem;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
 }
-
+img {
+    width: 20px;
+    height: 20px;
+}
 body {
     background-color: var(--clr-background);
     color: var(--clr-text);
@@ -91,7 +101,7 @@ section {
 .add-task-area {
     display: grid;
     grid-template-rows: 1fr;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 2fr 80px;
 }
 input[type="text"] {
     background-color: transparent;
@@ -102,6 +112,7 @@ input[type="text"] {
 }
 .action-btn-list {
     display: flex;
+    justify-content: center;
 }
 .action-btn-list li {
     flex: 1;
@@ -146,7 +157,9 @@ input[type="text"] {
 }
 .task-actions {
     height: 100%;
-    width: 70px;
+    width: 90px;
+    display: flex;
+    justify-content: center;
     border-radius: 0px 12px 12px 0px;
     background-color: #d23f3f;
 }
