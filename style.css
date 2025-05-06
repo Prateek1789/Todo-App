@@ -155,13 +155,34 @@ input[type="text"] {
     justify-content: space-between;
     align-items: center;
 }
+.task-head div:first-child {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+.task-head div:first-child label {
+    height: 20px;
+    border-radius: 50%;
+    transform: translateY(0.75px);
+}
+.task-head div:first-child input:checked + label {
+    background-color: rgb(0, 123, 255);
+}
+.check-container {
+    height: 100%;
+    width: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #161616;
+}
 .task-actions {
     height: 100%;
     width: 90px;
     display: flex;
     justify-content: center;
     border-radius: 0px 12px 12px 0px;
-    background-color: #d23f3f;
 }
 .task-list-item:has(.check-list) {
     display: grid;
