@@ -22,11 +22,11 @@
             <label for="task-input" style="display: none;">Enter Task</label>
             <input type="text" id="task-input" class="task-input-field" placeholder="New Task">
             <ul class="action-btn-list">
-                <li><button type="button">
-                    <img src="./assets/add.svg" alt="">
-                </button></li>
-                <li><button type="button">
+                <li><button type="button" class="add-checklist-btn">
                     <img src="./assets/add-checklist.svg" alt="">
+                </button></li>
+                <li><button type="button" class="add-task-btn">
+                    <img src="./assets/add.svg" alt="">
                 </button></li>
             </ul>
         </section>
@@ -34,8 +34,12 @@
             <ul class="task-list">
                 <li class="task-list-item">
                     <div class="task-head">
-                        <h4 class="task">New Task 1</h4>
-                        <span class="task-actions">
+                        <div class="">
+                            <input type="checkbox" name="task_complete" id="task_check1" style="display: none;">
+                            <label for="task_check1"><img src="./assets/check.svg" alt=""></label>
+                            <h4 class="task">New Task 1</h4>
+                        </div>
+                        <div class="task-actions">
                             <button>
                                 <img src="./assets/edit.svg" alt="Edit icon">
                             </button>
@@ -45,12 +49,16 @@
                             <button>
                                 <img src="./assets/delete.svg" alt="Delete Icon">
                             </button>
-                        </span>
+                        </div>
                     </div>
                 </li>
                 <li class="task-list-item">
                     <div class="task-head">
-                        <h4 class="task">New Task 2</h4>
+                        <div class="">
+                            <input type="checkbox" name="task_complete" id="task_check2" style="display: none;">
+                            <label for="task_check2"><img src="./assets/check.svg" alt=""></label>
+                            <h4 class="task">New Task 2</h4>
+                        </div>
                         <span class="task-actions">
                             <button>
                                 <img src="./assets/edit.svg" alt="Edit icon">
@@ -78,24 +86,9 @@
                         </li>
                     </ul>
                 </li>
-                <li class="task-list-item">
-                    <div class="task-head">
-                        <h4 class="task">New task 3</h4>
-                        <span class="task-actions">
-                            <button>
-                                <img src="./assets/edit.svg" alt="Edit icon">
-                            </button>
-                            <button>
-                                <img src="./assets/add-checklist.svg" alt="Add check-list icon">
-                            </button>
-                            <button>
-                                <img src="./assets/delete.svg" alt="Delete Icon">
-                            </button>
-                        </span>
-                    </div>
-                </li>
             </ul>
         </section>
     </main>
+    src
 </body>
 </html>
