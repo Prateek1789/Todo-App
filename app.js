@@ -4,28 +4,25 @@ class ToDoApp {
         this.taskInput = document.querySelector("#task-input");
         this.totalTaskCounter = document.querySelector(".total-task");
         this.completedTaskCounter = document.querySelector(".task-completed");
-        this.checkListArray = [];
         this.task = '';
         this.totalTasks = 0;
         this.completedTask = 0;
-        this.itemNum = 1;
+        this.checkBoxIDNum = 1;
         this.init();
     }
 
     init() {
         document.addEventListener("click", e => {
             this.checkTask(e);
-            if (e.target.closest(".add-task-btn")) {
-                this.itemNum++;
-            }
         })
     }
 
     checkTask(event) {
         if (event.target.closest(".add-task-btn") && this.taskInput.value) {
             this.task = this.taskInput.value;
-            this.generateTaskItem(this.task, true);
+            this.generateTaskItem(this.task, false);
             this.taskInput.value = '';
+            this.task = '';
         }
         if (event.target.closest(".delete-task")) {
             let parent = event.target.closest("li");
@@ -44,8 +41,8 @@ class ToDoApp {
             newTaskItem.className = "task-list-item";
             newTaskItem.innerHTML = `<div class="task-head">
                                         <div class="">
-                                            <input type="checkbox" name="task_complete" id="task_check${this.itemNum}" style="display: none;">
-                                            <label for="task_check${this.itemNum}"><img src="./assets/check.svg" alt=""></label>
+                                            <input type="checkbox" name="task_complete" id="task_check${this.checkBoxIDNum}" style="display: none;">
+                                            <label for="task_check${this.checkBoxIDNum}"><img src="./assets/check.svg" alt=""></label>
                                             <h4 class="task">${newTask}</h4>
                                         </div>
                                         <div class="task-actions">
@@ -64,29 +61,27 @@ class ToDoApp {
 
             this.taskList.appendChild(newTaskItem);
 
-            this.checkListArray = [...(document.querySelectorAll(".check-list"))];
+            const subList = newTaskItem.querySelector(".check-list");
 
             taskString.forEach((itm) => {
                 const child = document.createElement("li");
                 child.className = "check-list-item";
                 child.innerHTML = `<input type="checkbox" name="user_task_checklist" id="">
                                    <label for="">${itm}</label>`;
-                this.checkListArray[this.itemNum - 1].appendChild(child);
+                subList.appendChild(child);
             });
 
-            console.log(this.itemNum - 1);
-            console.log(this.checkListArray[this.itemNum - 1]);
-            console.log(this.checkListArray);
             taskString = '';
             newTask = '';
+            this.checkBoxIDNum++;
         }
         else {
             const newTaskItem = document.createElement("li");
             newTaskItem.className = "task-list-item";
             newTaskItem.innerHTML = `<div class="task-head">
                                         <div class="">
-                                            <input type="checkbox" name="task_complete" id="task_check${this.itemNum}" style="display: none;">
-                                            <label for="task_check${this.itemNum}"><img src="./assets/check.svg" alt=""></label>
+                                            <input type="checkbox" name="task_complete" id="task_check${this.checkBoxIDNum}" style="display: none;">
+                                            <label for="task_check${this.checkBoxIDNum}"><img src="./assets/check.svg" alt=""></label>
                                             <h4 class="task">${task}</h4>
                                         </div>
                                         <div class="task-actions">
@@ -102,6 +97,7 @@ class ToDoApp {
                                         </div>
                                     </div>`;
             this.taskList.appendChild(newTaskItem);
+            this.checkBoxIDNum++;
         }
         
         this.totalTasks = [...document.querySelectorAll(".task-list-item")].length;
