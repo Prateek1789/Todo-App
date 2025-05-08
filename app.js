@@ -4,26 +4,39 @@ class ToDoApp {
         this.taskInput = document.querySelector("#task-input");
         this.totalTaskCounter = document.querySelector(".total-task");
         this.completedTaskCounter = document.querySelector(".task-completed");
+        this.addCheckListBtn = document.querySelector(".add-checklist-btn");
         this.task = '';
         this.totalTasks = 0;
         this.completedTask = 0;
         this.checkBoxIDNum = 1;
+        this.isEditModeOn = false;
+        this.isCheckListBtnOn = this.addCheckListBtn.classList.contains("active");
         this.init();
     }
 
     init() {
         document.addEventListener("click", e => {
             this.checkTask(e);
-        })
+        });
+
+        /* --This code is only for to keep the mock task in its count */
+        this.totalTasks = [...document.querySelectorAll(".task-list-item")].length;
+        this.totalTaskCounter.innerHTML = this.totalTasks;
     }
 
     checkTask(event) {
-        if (event.target.closest(".add-task-btn") && this.taskInput.value) {
+        if (event.target.closest(".add-checklist-btn")) {
+            this.addCheckListBtn.classList.toggle("active");
+            this.isCheckListBtnOn = this.addCheckListBtn.classList.contains("active");
+        }
+
+        if (event.target.closest(".add-task-btn") && this.taskInput.value && !this.isEditModeOn) {
             this.task = this.taskInput.value;
-            this.generateTaskItem(this.task, false);
+            this.generateTaskItem(this.task, this.isCheckListBtnOn);
             this.taskInput.value = '';
             this.task = '';
         }
+        
         if (event.target.closest(".delete-task")) {
             let parent = event.target.closest("li");
             this.taskList.removeChild(parent);
@@ -48,9 +61,6 @@ class ToDoApp {
                                         <div class="task-actions">
                                             <button class="edit-task">
                                                 <img src="./assets/edit.svg" alt="Edit icon">
-                                            </button>
-                                            <button class="insert-checklist">
-                                                <img src="./assets/add-checklist.svg" alt="Add check-list icon">
                                             </button>
                                             <button class="delete-task">
                                                 <img src="./assets/delete.svg" alt="Delete Icon">
@@ -87,9 +97,6 @@ class ToDoApp {
                                         <div class="task-actions">
                                             <button class="edit-task">
                                                 <img src="./assets/edit.svg" alt="Edit icon">
-                                            </button>
-                                            <button class="insert-checklist">
-                                                <img src="./assets/add-checklist.svg" alt="Add check-list icon">
                                             </button>
                                             <button class="delete-task">
                                                 <img src="./assets/delete.svg" alt="Delete Icon">
