@@ -126,10 +126,15 @@ input[type="text"] {
 .action-btn-list li:last-child button {
     border-radius: 0px 18px 18px 0px;
 }
+.add-checklist-btn.active {
+    background-color: #007bff;
+}
+
 .task-list-area {
     width: 100%;
     height: calc(100vh - 30vh - 114px);
     padding: 0.75rem;
+    overflow-y: scroll;
 }
 .task-list {
     width: 100%;
@@ -150,7 +155,7 @@ input[type="text"] {
 .task-head {
     width: 100%;
     height: 50px;
-    padding-inline-start: 0.5rem;
+    padding-inline: 0.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -167,7 +172,7 @@ input[type="text"] {
     transform: translateY(0.75px);
 }
 .task-head div:first-child input:checked + label {
-    background-color: rgb(0, 123, 255);
+    background-color: #007bff;
 }
 .check-container {
     height: 100%;
@@ -179,7 +184,6 @@ input[type="text"] {
 }
 .task-actions {
     height: 100%;
-    width: 90px;
     display: flex;
     justify-content: center;
     border-radius: 0px 12px 12px 0px;
