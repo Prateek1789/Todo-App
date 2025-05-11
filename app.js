@@ -46,7 +46,7 @@ class ToDoApp {
             });
             parent.addEventListener("animationend", () => {
                 this.taskList.removeChild(parent);
-            }, { once: true} );
+            }, { once: true});
         }
     }
 
@@ -78,11 +78,11 @@ class ToDoApp {
 
             const subList = newTaskItem.querySelector(".check-list");
 
-            taskString.forEach((itm) => {
+            taskString.forEach((itm, idx) => {
                 const child = document.createElement("li");
                 child.className = "check-list-item";
-                child.innerHTML = `<input type="checkbox" name="user_task_checklist" id="">
-                                   <label for="">${itm}</label>`;
+                child.innerHTML = `<input type="checkbox" name="user_task_checklist" id="check_list_task${idx + 1}">
+                                   <label for="check_list_task${idx + 1}">${itm}</label>`;
                 subList.appendChild(child);
             });
 
