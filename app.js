@@ -19,7 +19,7 @@ class ToDoApp {
             this.checkTask(e);
         });
 
-        /* --This code is only for to keep the mock task in its count */
+        /* --This code is only here to keep the mock task item in total task count */
         this.totalTasks = [...document.querySelectorAll(".task-list-item")].length;
         this.totalTaskCounter.innerHTML = this.totalTasks;
     }
@@ -39,9 +39,14 @@ class ToDoApp {
         
         if (event.target.closest(".delete-task")) {
             let parent = event.target.closest("li");
-            this.taskList.removeChild(parent);
             this.totalTasks--;
             this.totalTaskCounter.innerHTML = this.totalTasks;
+            requestAnimationFrame(() => {
+                parent.classList.add("delete");
+            });
+            parent.addEventListener("animationend", () => {
+                this.taskList.removeChild(parent);
+            }, { once: true} );
         }
     }
 
