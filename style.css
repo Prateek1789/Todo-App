@@ -235,3 +235,6 @@ input[type="text"] {
     align-items: center;
     gap: 0.5rem;
 }
+.check-list-item input[type="checkbox"]:checked + label {
+    text-decoration: line-through;
+}
