@@ -13,6 +13,8 @@
     --clr-text-light: #eaeaea;
     --clr-bg: #E8D8CD;
     --clr-accent: #A16B48;
+    --clr-active: #007bff;
+    --clr-delete: #ea4b4b;
     --font-hero: clamp(2.2rem, 4.4vw + 1rem, 6rem);
     --font-xl: clamp(2rem, 2.2vw + 1rem, 4rem);
     --font-lg: clamp(1.5rem, 2vw + 1rem, 3rem);
@@ -127,7 +129,7 @@ input[type="text"] {
     border-radius: 0px 18px 18px 0px;
 }
 .add-checklist-btn.active {
-    background-color: #007bff;
+    background-color: var(--clr-active);
 }
 
 .task-list-area {
@@ -135,6 +137,7 @@ input[type="text"] {
     height: calc(100vh - 30vh - 114px);
     padding: 0.75rem;
     overflow-y: scroll;
+    overflow-x: hidden;
 }
 .task-list {
     width: 100%;
@@ -151,6 +154,23 @@ input[type="text"] {
     border-radius: 12px;
     background-color: var(--clr-accent);
     color: var(--clr-text-light);
+    transform-origin: center;
+    will-change: transform;
+    transition: 240ms ease;
+}
+.task-list-item.delete {
+    animation: delete ease;
+    animation-duration: 350ms;
+}
+@keyframes delete {
+    from {
+        background-color: var(--clr-accent);
+        scale: 1 1;
+    }
+    to {
+        background-color: var(--clr-delete);
+        scale: 200% 0;
+    }
 }
 .task-head {
     width: 100%;
@@ -172,7 +192,10 @@ input[type="text"] {
     transform: translateY(0.75px);
 }
 .task-head div:first-child input:checked + label {
-    background-color: #007bff;
+    background-color: var(--clr-active);
+}
+.task-head div:first-child input:checked ~ .task {
+    text-decoration: line-through;
 }
 .check-container {
     height: 100%;
