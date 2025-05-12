@@ -57,6 +57,7 @@ class ToDoApp {
         this.completedTasks = 0;
         this.taskID = 1;
         this.isEditModeOn = false;
+        this.taskBeingEdited;
         this.init();
     };
 
@@ -75,14 +76,23 @@ class ToDoApp {
         this.completedTasks = [...document.querySelectorAll(".checked")].length;
         this.compTaskCounter.textContent = this.completedTasks;
     };
-
+    
     appOperations(e) {
         if (e.target.closest(".add-checklist-btn")) {
             this.addCheckListBtn.classList.toggle("active");
             this.isCheckListActive = this.addCheckListBtn.classList.contains("active");
         }
 
-        if (e.target.closest(".add-task-btn") && this.taskInput.value && !this.isEditModeOn) {
+        if (e.target.closest(".add-task-btn") && this.taskInput.value) {
+            if (this.isEditModeOn) {
+                const titleElement = this.taskBeingEdited.querySelector(".task");
+                titleElement.textContent = this.taskInput.value;
+                this.taskInput.value = '';
+                this.isEditModeOn = false;
+                this.taskBeingEdited = null;
+                return;
+            };
+
             const taskString = this.taskInput.value.split(".");
             const taskName = taskString[0];
             taskString.shift();
@@ -100,6 +110,15 @@ class ToDoApp {
             this.countCompletedTask();
         }
 
+        if (e.target.closest(".edit-task")) {
+            const li = e.target.closest("li");
+            const taskTitle = li.querySelector(".task").textContent;
+
+            this.taskInput.value = taskTitle;
+            this.isEditModeOn = true;
+            this.taskBeingEdited = li;
+        }
+        
         if (e.target.closest(".delete-task")) {
             let parent = e.target.closest("li");
             requestAnimationFrame(() => {
