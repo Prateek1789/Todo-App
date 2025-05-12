@@ -76,7 +76,24 @@ class ToDoApp {
         this.completedTasks = [...document.querySelectorAll(".checked")].length;
         this.compTaskCounter.textContent = this.completedTasks;
     };
-    
+
+    initEdit(parent) {
+        const taskTitle = parent.querySelector(".task").textContent;
+
+        if (parent.querySelector(".check-list")) {
+            const checkListContainer = parent.querySelector(".check-list");
+            const checkListItems = [taskTitle]; 
+            checkListContainer.querySelectorAll("label").forEach(itm => {
+                checkListItems.push(itm.textContent);
+            });
+            const editableString = checkListItems.join(".");
+            this.taskInput.value = editableString;
+        }
+        else {
+            this.taskInput.value = taskTitle;
+        }
+    }
+
     appOperations(e) {
         if (e.target.closest(".add-checklist-btn")) {
             this.addCheckListBtn.classList.toggle("active");
@@ -86,7 +103,20 @@ class ToDoApp {
         if (e.target.closest(".add-task-btn") && this.taskInput.value) {
             if (this.isEditModeOn) {
                 const titleElement = this.taskBeingEdited.querySelector(".task");
-                titleElement.textContent = this.taskInput.value;
+                const checkList = this.taskBeingEdited.querySelector(".check-list");
+                
+                if (checkList) {  
+                    const newCheckListString = this.taskInput.value.split(".");
+                    titleElement.textContent = newCheckListString[0];
+                    newCheckListString.shift();
+                    checkList.querySelectorAll("label").forEach((itm, idx) => {
+                        itm.textContent = newCheckListString[idx];
+                    });
+                }
+                else {
+                    titleElement.textContent = this.taskInput.value;
+                }
+                
                 this.taskInput.value = '';
                 this.isEditModeOn = false;
                 this.taskBeingEdited = null;
@@ -112,9 +142,7 @@ class ToDoApp {
 
         if (e.target.closest(".edit-task")) {
             const li = e.target.closest("li");
-            const taskTitle = li.querySelector(".task").textContent;
-
-            this.taskInput.value = taskTitle;
+            this.initEdit(li);
             this.isEditModeOn = true;
             this.taskBeingEdited = li;
         }
