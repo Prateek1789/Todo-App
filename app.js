@@ -2,14 +2,13 @@ class Task {
     constructor(title, checklist = [], flag) {
         this.title = title;
         this.checklistItems = checklist;
-        this.isCompleted = false;
         this.isChecklist = this.checklistItems.length > 0 && flag;
-    }
+    };
 
     createTask(iD) {
        return `<div class="task-head">
                     <div class="">
-                        <input type="checkbox" name="task_complete" id="task_check${iD}" style="display: none;">
+                        <input type="checkbox" name="task_complete" class="main_checkbox" id="task_check${iD}" style="display: none;">
                         <label for="task_check${iD}"><img src="./assets/check.svg" alt=""></label>
                         <h4 class="task">${this.title}</h4>
                     </div>
@@ -22,16 +21,16 @@ class Task {
                         </button>
                     </div>
                 </div>`;
-    }
+    };
 
     renderTask(parent, iD) {
-        if (this.isChecklist) {
-            const newTaskItem = document.createElement("li");
-            newTaskItem.className = "task-list-item";
-            newTaskItem.innerHTML = this.createTask(iD);
-            newTaskItem.innerHTML += `\n<ul class="check-list"></ul>`;
+        const newTaskItem = document.createElement("li");
+        newTaskItem.className = "task-list-item unchecked";
+        newTaskItem.innerHTML = this.createTask(iD);
+        parent.appendChild(newTaskItem);
 
-            parent.appendChild(newTaskItem);
+        if (this.isChecklist) {
+            newTaskItem.innerHTML += `\n<ul class="check-list"></ul>`;
 
             const checkList = newTaskItem.querySelector(".check-list");
 
@@ -42,15 +41,9 @@ class Task {
                                    <label for="check_list_task${idx + 1}">${itm}</label>`;
                 checkList.appendChild(child);
             });
-        }
-        else {
-            const newTaskItem = document.createElement("li");
-            newTaskItem.className = "task-list-item";
-            newTaskItem.innerHTML = this.createTask(iD);
-            parent.appendChild(newTaskItem);
-        }
-    }
-}
+        };
+    };
+};
 
 class ToDoApp {
     constructor() {
@@ -61,22 +54,27 @@ class ToDoApp {
         this.addCheckListBtn = document.querySelector(".add-checklist-btn");
         this.isCheckListActive = this.addCheckListBtn.classList.contains("active");
         this.totalTasks = 0;
-        this.completedTask = 0;
+        this.completedTasks = 0;
         this.taskID = 1;
         this.isEditModeOn = false;
         this.init();
-    }
+    };
 
     init() {
         document.addEventListener("click", e => {
             this.appOperations(e);
         });
-    }
+    };
 
     countTask() {
         this.totalTasks = [...document.querySelectorAll(".task-list-item")].length;
         this.totalTaskCounter.textContent = this.totalTasks;
-    }
+    };
+
+    countCompletedTask() {
+        this.completedTasks = [...document.querySelectorAll(".checked")].length;
+        this.compTaskCounter.textContent = this.completedTasks;
+    };
 
     appOperations(e) {
         if (e.target.closest(".add-checklist-btn")) {
@@ -94,7 +92,14 @@ class ToDoApp {
             this.taskInput.value = '';
             this.taskID++;
         }
-        
+
+        if (e.target.closest(`.main_checkbox`)) {
+            const parent = e.target.closest("li");
+            parent.classList.toggle("unchecked");
+            parent.classList.toggle("checked");
+            this.countCompletedTask();
+        }
+
         if (e.target.closest(".delete-task")) {
             let parent = e.target.closest("li");
             requestAnimationFrame(() => {
@@ -103,10 +108,11 @@ class ToDoApp {
             parent.addEventListener("animationend", () => {
                 this.taskList.removeChild(parent);
                 this.countTask();
-            }, { once: true});
+                this.countCompletedTask();
+            }, { once: true });
         }
-    }
-}
+    };
+};
 
 const myApp = new ToDoApp();
 
