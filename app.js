@@ -26,6 +26,7 @@ class Task {
     renderTask(parent, iD) {
         const newTaskItem = document.createElement("li");
         newTaskItem.className = "task-list-item unchecked";
+        newTaskItem.dataset.taskID = iD;
         newTaskItem.innerHTML = this.createTask(iD);
         parent.appendChild(newTaskItem);
 
@@ -37,8 +38,8 @@ class Task {
             this.checklistItems.forEach((itm, idx) => {
                 const child = document.createElement("li");
                 child.className = "check-list-item";
-                child.innerHTML = `<input type="checkbox" name="user_task_checklist" id="check_list_task${idx + 1}">
-                                   <label for="check_list_task${idx + 1}">${itm}</label>`;
+                child.innerHTML = `<input type="checkbox" name="user_task_checklist" id="check_list_task${idx + 1}_${iD}">
+                                   <label for="check_list_task${idx + 1}_${iD}">${itm}</label>`;
                 checkList.appendChild(child);
             });
         };
@@ -117,10 +118,11 @@ class ToDoApp {
                     const newCheckList = this.taskBeingEdited.querySelector(".check-list");
 
                     inputObject.checkList.forEach((itm, idx) => {
+                        let parentId = this.taskBeingEdited.dataset.taskID;
                         const child = document.createElement("li");
                         child.className = "check-list-item";
-                        child.innerHTML = `<input type="checkbox" name="user_task_checklist" id="check_list_task${idx + 1}">
-                                           <label for="check_list_task${idx + 1}">${itm}</label>`;
+                        child.innerHTML = `<input type="checkbox" name="user_task_checklist" id="check_list_task${idx + 1}_${parentId}">
+                                           <label for="check_list_task${idx + 1}_${parentId}">${itm}</label>`;
                         newCheckList.appendChild(child);
                     });
                 }
