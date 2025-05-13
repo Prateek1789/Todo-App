@@ -77,6 +77,16 @@ class ToDoApp {
         this.compTaskCounter.textContent = this.completedTasks;
     };
 
+    parseInput() {
+        const taskString = this.taskInput.value.split(".");
+        const taskName = taskString[0];
+        taskString.shift();
+        return {
+            title: taskName,
+            checkList: taskString
+        };
+    };
+
     initEdit(parent) {
         const taskTitle = parent.querySelector(".task").textContent;
 
@@ -104,13 +114,25 @@ class ToDoApp {
             if (this.isEditModeOn) {
                 const titleElement = this.taskBeingEdited.querySelector(".task");
                 const checkList = this.taskBeingEdited.querySelector(".check-list");
-                
-                if (checkList) {  
-                    const newCheckListString = this.taskInput.value.split(".");
-                    titleElement.textContent = newCheckListString[0];
-                    newCheckListString.shift();
+                const inputObject = this.parseInput();
+
+                if (inputObject.checkList && !checkList) {
+                    titleElement.textContent = inputObject.title;
+                    this.taskBeingEdited.innerHTML += `\n<ul class="check-list"></ul>`;
+                    const checkList = this.taskBeingEdited.querySelector(".check-list");
+
+                    inputObject.checkList.forEach((itm, idx) => {
+                        const child = document.createElement("li");
+                        child.className = "check-list-item";
+                        child.innerHTML = `<input type="checkbox" name="user_task_checklist" id="check_list_task${idx + 1}">
+                                           <label for="check_list_task${idx + 1}">${itm}</label>`;
+                        checkList.appendChild(child);
+                    });
+                }
+                else if (checkList) {
+                    titleElement.textContent = inputObject.title;
                     checkList.querySelectorAll("label").forEach((itm, idx) => {
-                        itm.textContent = newCheckListString[idx];
+                        itm.textContent = inputObject.checkList[idx];
                     });
                 }
                 else {
@@ -123,10 +145,8 @@ class ToDoApp {
                 return;
             };
 
-            const taskString = this.taskInput.value.split(".");
-            const taskName = taskString[0];
-            taskString.shift();
-            const newTask = new Task(taskName, taskString, this.isCheckListActive);
+            const inputObject = this.parseInput();
+            const newTask = new Task(inputObject.title, inputObject.checkList, this.isCheckListActive);
             newTask.renderTask(this.taskList, this.taskID);
             this.countTask();
             this.taskInput.value = '';
