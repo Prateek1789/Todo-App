@@ -78,16 +78,11 @@ class ToDoApp {
     };
 
     parseInput() {
-        const taskString = this.taskInput.value.split(".");
-        const taskName = taskString[0];
-        taskString.shift();
-        return {
-            title: taskName,
-            checkList: taskString
-        };
+        const [title, ...checkList] = this.taskInput.value.split(".");
+        return { title, checkList };
     };
 
-    initEdit(parent) {
+    initEditMode(parent) {
         const taskTitle = parent.querySelector(".task").textContent;
 
         if (parent.querySelector(".check-list")) {
@@ -116,17 +111,17 @@ class ToDoApp {
                 const checkList = this.taskBeingEdited.querySelector(".check-list");
                 const inputObject = this.parseInput();
 
-                if (inputObject.checkList && !checkList) {
+                if (inputObject.checkList.length > 0 && !checkList) {
                     titleElement.textContent = inputObject.title;
                     this.taskBeingEdited.innerHTML += `\n<ul class="check-list"></ul>`;
-                    const checkList = this.taskBeingEdited.querySelector(".check-list");
+                    const newCheckList = this.taskBeingEdited.querySelector(".check-list");
 
                     inputObject.checkList.forEach((itm, idx) => {
                         const child = document.createElement("li");
                         child.className = "check-list-item";
                         child.innerHTML = `<input type="checkbox" name="user_task_checklist" id="check_list_task${idx + 1}">
                                            <label for="check_list_task${idx + 1}">${itm}</label>`;
-                        checkList.appendChild(child);
+                        newCheckList.appendChild(child);
                     });
                 }
                 else if (checkList) {
@@ -134,6 +129,10 @@ class ToDoApp {
                     checkList.querySelectorAll("label").forEach((itm, idx) => {
                         itm.textContent = inputObject.checkList[idx];
                     });
+
+                    if (inputObject.checkList.length === 0) {
+                        checkList.remove();
+                    }
                 }
                 else {
                     titleElement.textContent = this.taskInput.value;
@@ -162,7 +161,7 @@ class ToDoApp {
 
         if (e.target.closest(".edit-task")) {
             const li = e.target.closest("li");
-            this.initEdit(li);
+            this.initEditMode(li);
             this.isEditModeOn = true;
             this.taskBeingEdited = li;
         }
