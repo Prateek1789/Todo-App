@@ -15,9 +15,9 @@
     --clr-accent: #A16B48;
     --clr-active: #007bff;
     --clr-delete: #ea4b4b;
-    --font-hero: clamp(2.2rem, 4.4vw + 1rem, 6rem);
-    --font-xl: clamp(2rem, 2.2vw + 1rem, 4rem);
-    --font-lg: clamp(1.5rem, 2vw + 1rem, 3rem);
+    --font-hero: clamp(2.2rem, 4.4vw + 1rem, 3.5rem);
+    --font-xl: clamp(2.5rem, 2.5vw + 1rem, 5rem);
+    --font-lg: clamp(1.75rem, 2vw + 1rem, 3.25rem);
     --font-sm: 1rem;
 }
 h1 {
@@ -57,7 +57,9 @@ body {
 
 main {
     width: 100%;
+    max-width: 568px;
     height: 100%;
+    margin-inline: auto;
     padding: 1rem;
     display: grid;
     grid-template-columns: 1fr;
