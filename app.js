@@ -130,15 +130,21 @@ class ToDoApp {
                     titleElement.textContent = inputObject.title;
                     const checkListItemsCount = checkList.querySelectorAll("label").length;
                     const newCheckListItemsCount = inputObject.checkList.length;
-                    
+                    const difference = newCheckListItemsCount - checkListItemsCount;
+
                     if (newCheckListItemsCount > checkListItemsCount) {
                         let parentId = this.taskBeingEdited.dataset.taskID;
-                        const child = document.createElement("li");
-                        child.className = "check-list-item";
-                        child.innerHTML = `<input type="checkbox" name="user_task_checklist" id="check_list_task${newCheckListItemsCount}_${parentId}">
-                                           <label for="check_list_task${newCheckListItemsCount}_${parentId}"></label>`;
-                        checkList.appendChild(child);
-
+                        let newID = checkListItemsCount + 1;
+                        
+                        for (let i = 0; i < difference; i++) {
+                            const child = document.createElement("li");
+                            child.className = "check-list-item";
+                            child.innerHTML = `<input type="checkbox" name="user_task_checklist" id="check_list_task${newID}_${parentId}">
+                                           <label for="check_list_task${newID}_${parentId}"></label>`;
+                            checkList.appendChild(child);
+                            newID++;
+                        }
+                        
                         checkList.querySelectorAll("label").forEach((itm, idx) => {
                             itm.textContent = inputObject.checkList[idx];
                         });
