@@ -98,7 +98,7 @@ class ToDoApp {
         else {
             this.taskInput.value = taskTitle;
         }
-    }
+    };
 
     appOperations(e) {
         if (e.target.closest(".add-checklist-btn")) {
@@ -111,6 +111,7 @@ class ToDoApp {
                 const titleElement = this.taskBeingEdited.querySelector(".task");
                 const checkList = this.taskBeingEdited.querySelector(".check-list");
                 const inputObject = this.parseInput();
+                const parentId = this.taskBeingEdited.dataset.taskID;
 
                 if (inputObject.checkList.length > 0 && !checkList) {
                     titleElement.textContent = inputObject.title;
@@ -118,7 +119,6 @@ class ToDoApp {
                     const newCheckList = this.taskBeingEdited.querySelector(".check-list");
 
                     inputObject.checkList.forEach((itm, idx) => {
-                        let parentId = this.taskBeingEdited.dataset.taskID;
                         const child = document.createElement("li");
                         child.className = "check-list-item";
                         child.innerHTML = `<input type="checkbox" name="user_task_checklist" id="check_list_task${idx + 1}_${parentId}">
@@ -133,7 +133,6 @@ class ToDoApp {
                     const difference = newCheckListItemsCount - checkListItemsCount;
 
                     if (newCheckListItemsCount > checkListItemsCount) {
-                        let parentId = this.taskBeingEdited.dataset.taskID;
                         let newID = checkListItemsCount + 1;
                         
                         for (let i = 0; i < difference; i++) {
@@ -144,10 +143,12 @@ class ToDoApp {
                             checkList.appendChild(child);
                             newID++;
                         }
-                        
-                        checkList.querySelectorAll("label").forEach((itm, idx) => {
-                            itm.textContent = inputObject.checkList[idx];
-                        });
+                    }
+                    else if (newCheckListItemsCount < checkListItemsCount) {
+                        for(let i = 0; i > difference; i--) {
+                            const deleteItm = checkList.lastChild;
+                            deleteItm.remove();
+                        }
                     }
 
                     checkList.querySelectorAll("label").forEach((itm, idx) => {
