@@ -1,39 +1,13 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Simple ToDo App">
-    <meta name="author" content="Prateek">
-    <meta name="robots" content="index, follow">
-    <title>ToDo App</title>
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <main>
-        <section class="app-head">
-            <div><h1>TASKS FOR THE DAY</h1></div>
-            <div>
-                <h2 class="total-task">0</h2>
-                <h3 class="task-completed">0</h3>
-            </div>
-        </section>
-        <section class="add-task-area">
-            <label for="task-input" style="display: none;">Enter Task</label>
-            <input type="text" id="task-input" class="task-input-field" placeholder="New Task">
-            <ul class="action-btn-list">
-                <li><button type="button" class="add-checklist-btn">
-                    <img src="./assets/add-checklist.svg" alt="">
-                </button></li>
-                <li><button type="button" class="add-task-btn">
-                    <img src="./assets/add.svg" alt="">
-                </button></li>
-            </ul>
-        </section>
-        <section class="task-list-area">
-            <ul class="task-list"></ul>
-        </section>
-    </main>
-    <script src="app.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vite + React</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
 </html>
