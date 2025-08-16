@@ -1,5 +1,9 @@
+import { useContext } from "react";
+import { TodoContext } from "../context/todoContext";
 
 const Todo = ({ task: { id, title, date, priority, isCompleted } }) => {
+  const { checkTodo } = useContext(TodoContext);
+
   const priorityColor = {
     high: 'bg-amber-300',
     medium: 'bg-blue-300',
@@ -23,7 +27,8 @@ const Todo = ({ task: { id, title, date, priority, isCompleted } }) => {
       <input type="checkbox" 
              name="task_check" 
              id="task-checkbox" 
-             className='border-none' />
+             className='border-none' 
+             onChange={(e) => checkTodo(parseInt(e.target.parentElement.dataset.id))}/>
     </div>
   )
 }
