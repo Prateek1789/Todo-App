@@ -1,5 +1,6 @@
 :root {
     --color-background: hsl(0,0%,100%);
+    --color-backdrop: hsla(0, 0%, 78%, 0.263);
     --color-text: hsl(0, 0%, 13%);
 }
 
@@ -12,6 +13,27 @@ header,
 dialog {
     background-color: var(--color-background);
     color: var(--color-text);
+}
+
+.progress-bar-fill {
+    transition: 240ms ease allow-discrete;
+}
+
+dialog {
+    transform: translateY(100%);
+    transition: 240ms ease allow-discrete;
+}
+
+dialog[open] {
+    transform: translate(0%);
+    @starting-style {
+        transform: translateY(100%);
+    }
+}
+
+dialog::backdrop {
+    background-color: var(--color-backdrop);
+    backdrop-filter: blur(0.5rem);
 }
 
 dialog label:has(input[type="radio"]) { transition: 240ms ease; }
