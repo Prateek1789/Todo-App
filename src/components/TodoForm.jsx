@@ -1,6 +1,8 @@
 import { useEffect, useRef, useContext } from "react"
+import { FormContext } from "../context/todoContext";
 
 function TodoForm() {
+    const { isEditing, formState, addTodo, closeTodoForm } = useContext(FormContext);
     const dialogRef = useRef();
     const titleRef = useRef();
     const summaryRef = useRef();
@@ -8,9 +10,15 @@ function TodoForm() {
 
     const setPriority = (weight) => priority = weight;
 
+    useEffect(() => {
+        if (formState) dialogRef.current.showModal();
+
+        if (!formState) dialogRef.current.close();
+    }, [formState]);
+
     return (
         <dialog ref={dialogRef} /* open */
-                className="max-w-full max-h-full absolute rounded-tl-xl rounded-tr-xl 
+                className="max-w-full max-h-full mt-auto rounded-tl-xl rounded-tr-xl
                            open:w-full open:px-4 open:pb-4 open:flex open:flex-col open:gap-6 open:bottom-0">
             <span className="w-full text-center p-4 text-2xl border-b-[1px] border-gray-300">Create New Task</span>
             <div className="task-info w-full flex flex-col gap-4">
@@ -47,12 +55,15 @@ function TodoForm() {
             </div>
             <div className="w-full flex gap-2">
                 <button className="w-full h-10 text-gray-100 rounded-lg"
-                        onClick={() => addTodo(titleRef, summaryRef, priority)}>
-                        {/* {!isEditing ? 'Create Todo' : 'Confirm'} */} Create Todo
+                        onClick={() => {
+                            addTodo(titleRef.current.value, summaryRef.current.value, priority);
+                            closeTodoForm(titleRef, summaryRef);
+                        }}>
+                        {!isEditing ? 'Create Todo' : 'Confirm'}
                 </button>
                 <button className="w-full h-10 text-gray-100 rounded-lg"
                         onClick={() => closeTodoForm(titleRef, summaryRef)}>
-                        {/* {!isEditing ? 'Cancel' : 'Delete Todo'} */} Cancel
+                        {!isEditing ? 'Cancel' : 'Delete Todo'}
                 </button>
             </div>
         </dialog>
