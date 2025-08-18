@@ -2,12 +2,12 @@ import { useContext } from "react";
 import { TodoContext } from "../context/todoContext";
 
 const Todo = ({ task: { id, title, date, priority, isCompleted } }) => {
-  const { checkTodo } = useContext(TodoContext);
+  const { checkTodo, editTodo } = useContext(TodoContext);
 
   const priorityColor = {
-    high: 'bg-amber-300',
-    medium: 'bg-blue-300',
-    low: 'bg-green-300'
+    high: 'bg-[var(--color-priority-high)]',
+    medium: 'bg-[var(--color-priority-medium)]',
+    low: 'bg-[var(--color-priority-low)]'
   };
 
   return (
@@ -24,11 +24,24 @@ const Todo = ({ task: { id, title, date, priority, isCompleted } }) => {
           <p className='date-added text-xs'>{date}</p>
         </span>
       </div>
-      <input type="checkbox" 
-             name="task_check" 
-             id="task-checkbox" 
-             className='border-none' 
-             onChange={(e) => checkTodo(parseInt(e.target.parentElement.dataset.id))}/>
+      <label htmlFor={`task-checkbox-${id}`} className="check-label rounded-md p-0.5 relative">
+        <svg xmlns="http://www.w3.org/2000/svg" height="22px" viewBox="0 -960 960 960" width="22px" fill="#eaeaea">
+          <path d="M382-240 154-468l57-57 171 171 367-367 57 57-424 424Z"/>
+        </svg>
+        <input type="checkbox" 
+              name="task_check" 
+              id={`task-checkbox-${id}`} 
+              className='task-check border-none absolute left-1/2 top-1/2 transform-[translate(-50%,_-50%)] z-[-1]' 
+              onChange={(e) => checkTodo(parseInt(e.target.parentElement.parentElement.dataset.id))}
+              checked={isCompleted ? true : false}/>
+      </label>
+      <button type="button" 
+              className="p-0.5 ml-2 bg-transparent rounded-md"
+              onClick={editTodo}>
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#ffffff" viewBox="0 0 24 24" className="m-auto" >
+          <path d="m19.41,3c-.78-.78-2.05-.78-2.83,0L4.29,15.29c-.13.13-.22.29-.26.46l-1,4c-.08.34.01.7.26.95.19.19.45.29.71.29.08,0,.16,0,.24-.03l4-1c.18-.04.34-.13.46-.26l12.29-12.29c.78-.78.78-2.05,0-2.83l-1.59-1.59Zm-11.93,15.1l-2.11.53.53-2.11L15,7.41l1.59,1.59-9.1,9.1Zm10.51-10.51l-1.59-1.59,1.59-1.59,1.59,1.58-1.59,1.59Z"></path>
+        </svg>
+      </button>
     </div>
   )
 }
