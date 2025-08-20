@@ -54,9 +54,13 @@ export const AppProvider = ({ children }) => {
         handleFormState();
     }
 
+    const deleteTodo = (id) => {
+        setTodos(prev => prev.filter(todo => todo.id !== id));
+    }
+
     return (
         <HeaderContext.Provider value={{ totalTodos, completedTodos }}>
-            <TodoContext.Provider value={{ todos, checkTodo, handleEdit }}>
+            <TodoContext.Provider value={{ todos, checkTodo, handleEdit, deleteTodo }}>
                 <FormContext.Provider value={{ formState, setFormState, isEditing, editingTodo, addTodo, handleFormState, updateTodo }}>
                     { children }
                 </FormContext.Provider>
