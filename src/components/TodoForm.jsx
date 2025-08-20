@@ -1,35 +1,35 @@
-import { useEffect, useRef, useContext } from "react"
+import { useState, useRef, useContext } from "react"
 import { FormContext } from "../context/todoContext";
+import useModal from "../hooks/useModal";
 
 function TodoForm() {
-    const { isEditing, formState, addTodo, closeTodoForm } = useContext(FormContext);
     const dialogRef = useRef();
     const titleRef = useRef();
     const summaryRef = useRef();
     let priority = 'medium';
+    
+    const { addTodo, handleFormState, updateTodo } = useContext(FormContext);
+    const [isEditing, editingTodo] = useModal(dialogRef, titleRef, summaryRef);
 
-    const setPriority = (weight) => priority = weight;
-
-    useEffect(() => {
-        if (formState) dialogRef.current.showModal();
-
-        if (!formState) dialogRef.current.close();
-    }, [formState]);
+    const setPriority = (value) => priority = value;
+    const getFormData = () => [titleRef.current.value, summaryRef.current.value, priority];
 
     return (
         <dialog ref={dialogRef} /* open */
-                className="max-w-full max-h-full mt-auto rounded-tl-xl rounded-tr-xl
-                           open:w-full open:px-4 open:pb-4 open:flex open:flex-col open:gap-6 open:bottom-0">
-            <span className="w-full text-center p-4 text-2xl border-b-[1px] border-gray-300">Create New Task</span>
+                className="max-w-full w-[calc(100%_-_1rem)] max-h-full mt-auto rounded-2xl left-2 bottom-2
+                           open:w-[calc(100%_-_1rem)] open:p-4 open:flex open:flex-col open:gap-6">
+            <span className="w-full text-center text-2xl ">
+                {isEditing ? editingTodo.title : 'Create New Task'}
+            </span>
             <div className="task-info w-full flex flex-col gap-4">
-                <label htmlFor="title-input" className="text-xl flex flex-col gap-2">Task
-                    <input type="text" 
+                <label htmlFor="title-input" className="sr-only">Title</label>
+                <input type="text" 
                            name="task_title" 
                            id="title-input" 
                            ref={titleRef} 
                            className="w-full h-10 text-sm px-2 border border-gray-300 rounded-lg" 
-                           placeholder="Title" />
-                </label>
+                           placeholder="Title"/>
+                <label htmlFor="summary-input" className="sr-only">Summary</label>
                 <textarea name="task_summary" 
                           id="summary-input" 
                           ref={summaryRef} 
@@ -39,31 +39,44 @@ function TodoForm() {
             <div className="w-full">
                 <h2 className="text-xl mb-2">Priority</h2>
                 <div className="w-full flex gap-2">
-                    <label htmlFor="priority-high" className="w-full h-8 relative flex items-center justify-center border-[1px] border-amber-300 rounded-lg">
+                    <label htmlFor="priority-high" className="w-full h-8 relative flex items-center justify-center border-[1px] border-[var(--color-priority-high)] rounded-lg">
                         High
-                        <input type="radio" name="priority" id="priority-high" onChange={() => setPriority('high')} className="absolute z-[-1] opacity-0" />
+                        <input type="radio" 
+                               name="priority" 
+                               id="priority-high"
+                               className="absolute z-[-1] opacity-0" 
+                               /* checked={isEditing && editingTodo.priority === priority} */
+                               onChange={() => setPriority('high')} />
                     </label>
-                    <label htmlFor="priority-medium" className="w-full h-8 relative flex items-center justify-center border-[1px] border-blue-300 rounded-lg">
+                    <label htmlFor="priority-medium" className="w-full h-8 relative flex items-center justify-center border-[1px] border-[var(--color-priority-medium)] rounded-lg">
                         Medium
-                        <input type="radio" name="priority" id="priority-medium" onChange={() => setPriority('medium')} className="absolute z-[-1] opacity-0" />
+                        <input type="radio" 
+                               name="priority" 
+                               id="priority-medium" 
+                               className="absolute z-[-1] opacity-0" 
+                               /* checked={isEditing && editingTodo.priority === priority} */
+                               onChange={() => setPriority('medium')} />
                     </label>
-                    <label htmlFor="priority-low" className="w-full h-8 relative flex items-center justify-center border-[1px] border-green-300 rounded-lg">
+                    <label htmlFor="priority-low" className="w-full h-8 relative flex items-center justify-center border-[1px] border-[var(--color-priority-low)] rounded-lg">
                         Low
-                        <input type="radio" name="priority" id="priority-low" onChange={() => setPriority('low')} className="absolute z-[-1] opacity-0" />
+                        <input type="radio" 
+                               name="priority" 
+                               id="priority-low" 
+                               className="absolute z-[-1] opacity-0" 
+                               /* checked={isEditing && editingTodo.priority === priority}  */
+                               onChange={() => setPriority('low')} />
                     </label>
                 </div>
             </div>
             <div className="w-full flex gap-2">
                 <button className="w-full h-10 text-gray-100 rounded-lg"
-                        onClick={() => {
-                            addTodo(titleRef.current.value, summaryRef.current.value, priority);
-                            closeTodoForm(titleRef, summaryRef);
+                        onClick={() => { !isEditing ? addTodo(...getFormData()) : updateTodo(...getFormData());
                         }}>
                         {!isEditing ? 'Create Todo' : 'Confirm'}
                 </button>
                 <button className="w-full h-10 text-gray-100 rounded-lg"
-                        onClick={() => closeTodoForm(titleRef, summaryRef)}>
-                        {!isEditing ? 'Cancel' : 'Delete Todo'}
+                        onClick={handleFormState}>
+                        Cancel
                 </button>
             </div>
         </dialog>
