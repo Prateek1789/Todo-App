@@ -1,8 +1,9 @@
-import { useContext } from "react";
+import { useContext, useRef } from "react";
 import { TodoContext } from "../context/todoContext";
 
 const Todo = ({ task: { id, title, date, priority, isCompleted } }) => {
-  const { checkTodo, editTodo } = useContext(TodoContext);
+  const { checkTodo, handleEdit } = useContext(TodoContext);
+  const todoRef = useRef();
 
   const priorityColor = {
     high: 'bg-[var(--color-priority-high)]',
@@ -11,10 +12,10 @@ const Todo = ({ task: { id, title, date, priority, isCompleted } }) => {
   };
 
   return (
-    <div data-id={`${id}`} className='todo w-full h-18 rounded-lg flex items-center pr-2'>
+    <div data-id={`${id}`} ref={todoRef} className='todo w-full h-auto rounded-lg flex items-center pr-2'>
       <div className={`priority-color w-4 h-full ${priorityColor[priority]} rounded-bl-lg rounded-tl-lg`}></div>
-      <div className="w-full h-full p-2 flex flex-col gap-1 justify-between">
-        <p className='task-title text-md'>{title}</p>
+      <div className="w-full h-full p-2 flex flex-col gap-3 justify-between">
+        <p className='task-title text-md leading-5'>{title}</p>
         <span className='flex gap-2 items-center'>
           <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="#000000" viewBox="0 0 24 24">
             <path d="M7 11H17V13H7z"></path>
@@ -32,12 +33,12 @@ const Todo = ({ task: { id, title, date, priority, isCompleted } }) => {
               name="task_check" 
               id={`task-checkbox-${id}`} 
               className='task-check border-none absolute left-1/2 top-1/2 transform-[translate(-50%,_-50%)] z-[-1]' 
-              onChange={(e) => checkTodo(parseInt(e.target.parentElement.parentElement.dataset.id))}
-              checked={isCompleted ? true : false}/>
+              onChange={() => checkTodo(Number(todoRef.current.dataset.id))}
+              checked={isCompleted ? true : false} />
       </label>
       <button type="button" 
               className="p-0.5 ml-2 bg-transparent rounded-md"
-              onClick={editTodo}>
+              onClick={() => handleEdit(Number(todoRef.current.dataset.id))}>
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="#ffffff" viewBox="0 0 24 24" className="m-auto" >
           <path d="m19.41,3c-.78-.78-2.05-.78-2.83,0L4.29,15.29c-.13.13-.22.29-.26.46l-1,4c-.08.34.01.7.26.95.19.19.45.29.71.29.08,0,.16,0,.24-.03l4-1c.18-.04.34-.13.46-.26l12.29-12.29c.78-.78.78-2.05,0-2.83l-1.59-1.59Zm-11.93,15.1l-2.11.53.53-2.11L15,7.41l1.59,1.59-9.1,9.1Zm10.51-10.51l-1.59-1.59,1.59-1.59,1.59,1.58-1.59,1.59Z"></path>
         </svg>
