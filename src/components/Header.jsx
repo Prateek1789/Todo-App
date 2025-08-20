@@ -10,7 +10,7 @@ const Header = () => {
             <h1 className='text-xl'>Daily Tasks</h1>
             <p className='text-md mb-2'>{completedTodos || 0 } / {totalTodos} Tasks completed</p>
             <span className='progress-bar w-full h-4 rounded-sm bg-gray-300 flex p-[0.1rem]'>
-                <span className={`progress-bar-fill h-full bg-[#1a1a1a] rounded-xs`}
+                <span className={`progress-bar-fill h-full bg-[var(--color-text)] rounded-xs`}
                       style={{ width: `${progressBarWidth()}%` }}></span>
             </span>
         </header>
