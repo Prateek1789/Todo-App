@@ -16,7 +16,7 @@ function TodoForm() {
 
     return (
         <dialog ref={dialogRef} /* open */
-                className="max-w-full w-[calc(100%_-_1rem)] max-h-full mt-auto rounded-2xl left-2 bottom-2
+                className="max-w-screen-sm w-[calc(100%_-_1rem)] max-h-full mt-auto rounded-2xl mx-auto bottom-2
                            open:w-[calc(100%_-_1rem)] open:p-4 open:flex open:flex-col open:gap-6">
             <span className="w-full text-center text-2xl ">
                 {isEditing ? editingTodo.title : 'Create New Task'}
