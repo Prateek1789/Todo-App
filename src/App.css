@@ -1,79 +1,51 @@
 :root {
-    --color-background: oklch(100% 0.002 265);
-    --color-backdrop: hsla(0, 0%, 63%, 0.521);
+    --color-background: oklch(100% 0.005 260);
     --color-text: oklch(10% 0 0);
-    --color-check: oklch(40% 0.199 265.638);
-    --color-priority-high: oklch(25% 0.003 258.338);
-    --color-priority-medium: oklch(45% 0.003 258.338);
-    --color-priority-low: oklch(65% 0.003 258.338);
+    --color-progress-bg: rgb(224, 224, 224);
+    --color-progress-value: oklch(70.7% 0.165 254.624);
+    --color-tick: oklch(79.2% 0.209 151.711);
 }
 
 #root { color: var(--color-text); }
 
-header,
 .todo,
 dialog {
     background-color: var(--color-background);
     color: var(--color-text);
 }
 
-.progress-bar-fill { transition: 240ms ease allow-discrete; }
+.todo-btn > svg { color: grey; }
+.btn-edit:hover > svg { color: rgb(52, 137, 249); }
+.btn-del:hover > svg { color: red; }
 
-dialog {
-    transform: translateY(100%);
-    transition: 240ms ease allow-discrete;
+progress,
+progress::-webkit-progress-bar {
+    border-radius: 1rem;
+    background-color: var(--color-progress-bg);
+    transition: 200ms ease;
 }
 
-dialog[open] {
-    transform: translate(0%);
-    @starting-style {
-        transform: translateY(100%);
-    }
+progress::-webkit-progress-value { 
+    border-radius: 1rem;
+    background-color: var(--color-progress-value);
+    transition: all 200ms ease;
 }
 
-dialog::backdrop {
-    background-color: var(--color-backdrop);
-    backdrop-filter: blur(0.5rem);
-    transition: 240ms ease-out allow-discrete;
-
-    @starting-style {
-        background-color: hsla(0, 0%, 100%, 0);
-        backdrop-filter: blur(0);
-    }
+progress::-moz-progress-value {
+    border-radius: 1rem;
+    background-color: var(--color-progress-value);
+    transition: all 200ms ease;
 }
 
-dialog label:has(input[type="radio"]) { transition: 240ms ease; }
-  
-dialog label input[type="radio"] { opacity: 0; }
-  
-dialog label:first-child:has(input:checked) { 
-    background-color: var(--color-priority-high)/* rgb(255, 205, 111) */;
-    color: whitesmoke;
-}
-
-dialog label:nth-child(2):has(input:checked) { 
-    background-color: var(--color-priority-medium)/* rgb(137, 196, 255) */;
-    color: whitesmoke; 
-}
-
-dialog label:last-child:has(input:checked) { 
-    background-color: var(--color-priority-low)/* rgb(178, 255, 134) */; 
-    color: whitesmoke;
-}
-
-.add-btn {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    font-size: 1.25rem;
-}
-
-.check-label {
-    background-color: var(--color-priority-high);
-    svg { opacity: 0; }
-
-    &:has(input:checked) {
-        background-color: var(--color-check);
-        svg { opacity: 1; }
-    }
+input[type="checkbox"]:checked::after {
+    content: '✓';
+    top: 50%;
+    left: 50%;
+    font-size: 0.95rem;
+    font-weight: 700;
+    position: absolute;
+    color: var(--color-tick);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: 200ms ease;
 }
