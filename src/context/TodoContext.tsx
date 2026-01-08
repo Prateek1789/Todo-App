@@ -1,70 +1,65 @@
-import { useState, useEffect, createContext } from "react";
+import { createContext, useContext, type ReactNode } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 
-export const HeaderContext = createContext();
-export const TodoContext = createContext();
-export const FormContext = createContext();
+export interface TodoVals {
+    id: number;
+    date: string;
+    title: string;
+    status: boolean;
+};
 
-export const AppProvider = ({ children }) => {
-    const [todos, setTodos] = useLocalStorage();
-    const totalTodos = todos.length;
-    const completedTodos = todos.filter(todo => todo.isCompleted === true).length;
-    const [formState, setFormState] = useState(false);
-    const [isEditing, setEditing] = useState(false);
-    const [editingTodo, setEditingTodo] = useState();
+export interface TodoValues {
+    todos: TodoVals[] | undefined;
+    total: number;
+    completed: number;
+    addTodo: (title: string) => void;
+    updateTodo: (id: number, title: string) => void;
+    toggleTodo: (id: number) => void;
+    deleteTodo: (id: number) => void;
+};
 
-    const createTodo = (title, summary, priority) => {
-        if (title && summary) {
-            return {
+interface ProviderProps {
+    children: ReactNode;
+};
+
+export const TodoContext = createContext<TodoValues | undefined>(undefined);
+
+export const AppProvider = ({ children }: ProviderProps) => {
+    const [todos, setTodos] = useLocalStorage<TodoVals[]>([]);
+    const total = todos.length;
+    const completed = todos.filter(todo => todo.status).length;
+
+    const addTodo = (title: string) => {
+        const todo: TodoVals = {
                 id: Date.now(),
                 title,
-                summary,
-                priority: priority,
-                isCompleted: false,
+                status: false,
                 date: new Date().toLocaleDateString()
-            };
-        }
-    }
+        };
+        setTodos(prev => [todo, ...prev]);
+    };
 
-    const handleFormState = () => {
-        setFormState(!formState);
-        if (isEditing) setEditing(false);
-    }
+    const updateTodo = (id: number, title: string) => {
+        setTodos(prev => prev.map(todo => todo.id === id ? { ...todo, title } : todo));
+    };
 
-    const addTodo = (title, summary, priority) => {
-        const data = createTodo(title, summary, priority);
-        setTodos(prev => [data, ...prev]);
-        handleFormState();
-    }
+    const toggleTodo = (id: number) => {
+        setTodos(prev => prev.map(todo => todo.id === id ? {...todo, status: !todo.status } : todo));
+    };
 
-    const checkTodo = (id) => {
-        setTodos(prev => prev.map(todo => todo.id === id ? {...todo, isCompleted: !todo.isCompleted} : todo));
-    }
-
-    const handleEdit = (id) => {
-        const data = todos.find(todo => todo.id === id);
-        setEditingTodo(data);
-        setEditing(true);
-        setFormState(true);
-    }
-
-    const updateTodo = (newTitle, newSummary, newPriority) => {
-        const id = editingTodo.id;
-        setTodos(prev => prev.map(todo => todo.id === id ? {...todo, title: newTitle, summary: newSummary, priority: newPriority} : todo));
-        handleFormState();
-    }
-
-    const deleteTodo = (id) => {
-        setTodos(prev => prev.filter(todo => todo.id !== id));
-    }
+    const deleteTodo = (id: number) => setTodos(prev => prev.filter(todo => todo.id !== id));
 
     return (
-        <HeaderContext.Provider value={{ totalTodos, completedTodos }}>
-            <TodoContext.Provider value={{ todos, checkTodo, handleEdit, deleteTodo }}>
-                <FormContext.Provider value={{ formState, setFormState, isEditing, editingTodo, addTodo, handleFormState, updateTodo }}>
-                    { children }
-                </FormContext.Provider>
-            </TodoContext.Provider>
-        </HeaderContext.Provider>
+        <TodoContext value={{ todos, total, completed, addTodo, updateTodo, toggleTodo, deleteTodo }}>
+            { children }
+        </TodoContext>
     )
-}
+};
+
+export const useTodo = () => {
+    const context = useContext(TodoContext);
+    if (!context) {
+        throw new Error("useTodo must be used within TodoProvider");
+    }
+    return context;
+};
