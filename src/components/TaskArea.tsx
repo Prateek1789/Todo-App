@@ -13,7 +13,6 @@ const TaskArea = ({}: TaskAreaProps) => {
                                          id={itm.id} 
                                          title={itm.title} 
                                          date={itm.date} 
-                                         priority={itm.priority} 
                                          status={itm.status} /> )}
         </div>
     )
