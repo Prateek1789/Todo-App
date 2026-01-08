@@ -1,5 +1,15 @@
 @import "tailwindcss";
 
+@theme {
+  --color-background: oklch(100% 0.002 265);
+  --color-backdrop: hsla(0, 0%, 63%, 0.521);
+  --color-text: oklch(10% 0 0);
+  --color-check: oklch(40% 0.199 265.638);
+  --color-PH: oklch(25% 0.003 258.338);
+  --color-PM: oklch(45% 0.003 258.338);
+  --color-PL: oklch(65% 0.003 258.338);
+}
+
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
@@ -42,13 +52,10 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
-  background-color: #1a1a1a;
   cursor: pointer;
-  transition: border-color 0.25s;
+  transition: 200ms ease;
 }
-button:hover {
-  border-color: #646cff;
-}
+
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
