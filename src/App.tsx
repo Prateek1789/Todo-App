@@ -1,18 +1,18 @@
 import './App.css'
-import { AppProvider } from './context/todoContext'
+import { AppProvider } from './context/TodoContext'
 
 import Header from './components/Header'
 import TaskArea from './components/TaskArea'
-import AddButton from './components/AddButton'
 import TodoForm from './components/TodoForm'
 
 function App() {
   return (
     <AppProvider>
-      <Header />
-      <TaskArea />
-      <AddButton />
-      <TodoForm />
+      <main className="max-w-2xl w-full h-full px-4 py-8 flex flex-col gap-8">
+        <Header />
+        <TodoForm />
+        <TaskArea />
+      </main>
     </AppProvider>
   )
 }
