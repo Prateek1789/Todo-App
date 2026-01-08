@@ -4,8 +4,7 @@ A Frontend Todo app built with React, featuring CRUD operations, priority based 
 
 # Features
 
-- Create, Read, Update and Delete tasks/todos      
-- Priority based system for Task/Todos - High, Medium and Low      
+- Create, Read, Update and Delete tasks/todos           
 - Progress bar     
 - Clean and responsive UI                
 
