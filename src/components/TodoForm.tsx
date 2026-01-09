@@ -16,6 +16,7 @@ const TodoForm = ({}: TodoFormProps) => {
     };
 
     return (
+        <div className='w-full h-auto px-4'>
         <form action=""
               onSubmit={submit}
               className="w-full h-22 flex items-center gap-4 px-4 py-2 rounded-2xl bg-background has-focus:outline-2 outline-blue-500 shadow-lg has-focus:shadow-blue-100">
@@ -34,6 +35,7 @@ const TodoForm = ({}: TodoFormProps) => {
                    value={task} 
                    onChange={(e) => setTask(e.target.value)}/>
         </form>
+        </div>
     )
 };
 
