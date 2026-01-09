@@ -8,7 +8,7 @@ import TodoForm from './components/TodoForm'
 function App() {
   return (
     <AppProvider>
-      <main className="max-w-2xl w-full h-full px-4 py-8 flex flex-col gap-8">
+      <main className="max-w-2xl w-full h-full py-8 flex flex-col gap-8">
         <Header />
         <TodoForm />
         <TaskArea />
