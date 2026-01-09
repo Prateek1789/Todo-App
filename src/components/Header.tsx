@@ -8,7 +8,7 @@ const Header = ({}: HeaderProps) => {
     const date = new Date().toLocaleDateString("en-us", { dateStyle: "long" });
 
     return (
-        <header className='w-full h-auto text-gray-800 rounded-lg flex flex-col gap-4'>
+        <header className='w-full h-auto px-4 text-gray-800 rounded-lg flex flex-col gap-4'>
             <h3 className="font-extrabold text-gray-400">{date}</h3>
             <div className="flex justify-between items-end">
                 <h1 className="text-sm font-bold">My Day</h1>
