@@ -9,7 +9,7 @@ const TaskArea = ({}: TaskAreaProps) => {
 
     return (
         <div className={`w-full h-full px-4 relative rounded-2xl grid content-start gap-3 overflow-y-scroll`}
-             style={{ gridTemplateRows: `repeat(${total},4.25rem)` }}>
+             style={{ gridTemplateRows: `repeat(${total},minmax(4.25rem, auto))` }}>
             { sortedTodos?.map(itm => <Todo key={itm.id} 
                                       id={itm.id} 
                                       title={itm.title} 
