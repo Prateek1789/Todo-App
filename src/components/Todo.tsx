@@ -4,7 +4,7 @@ import { Pencil, Trash2 } from "lucide-react";
 import { type TodoVals } from "../context/TodoContext";
 
 const Todo = ({ id, title, status, priority }: TodoVals) => {
-  const { updateTodo, toggleTodo, deleteTodo } = useTodo();
+  const { isMobile, updateTodo, toggleTodo, deleteTodo } = useTodo();
   const [isEditing, setEditing] = useState(false);
   const [editingText, setEditingText] = useState(title);
 
@@ -26,22 +26,22 @@ const Todo = ({ id, title, status, priority }: TodoVals) => {
 
   return (
     <div data-id={id}
-         className={`w-full h-full px-6 flex justify-between rounded-2xl bg-background shadow-lg shadow-neutral-300`}>
-      <div className="h-full w-full py-2 flex items-center gap-8">
+         className={`w-full h-full px-4 py-2.5 md:px-6 flex justify-between rounded-2xl bg-background shadow-lg shadow-neutral-300`}>
+      <div className="w-full flex items-center gap-2 md:gap-4">
         <div className="flex items-center gap-2">
           <label htmlFor={`check-todo-${id}`}
-                 className={`${isEditing ? 'hidden': 'flex'} gap-4 items-center text-lg md:text-xl has-checked:line-through has-checked:text-neutral-400 has-checked:text-sm has-checked:select-none transition-all duration-200 cursor-pointer peer`}>
+                 className={`${isEditing ? 'hidden': 'flex'} gap-2 md:gap-4 items-center text-sm md:text-xl has-checked:line-through has-checked:text-neutral-400 has-checked:text-sm has-checked:select-none transition-all duration-200 cursor-pointer wrap-normal`}>
             <input type="checkbox" 
-                 name="todo-check"
-                 id={`check-todo-${id}`}
-                 checked={status}
-                 disabled={isEditing}
-                 onChange={() => toggleTodo(id)}
-                 className="appearance-none relative w-5 h-5 border border-neutral-300 rounded-md checked:bg-green-100 checked:border-green-400 transition-colors duration-200 cursor-pointer"/>
+                   name="todo-check"
+                   id={`check-todo-${id}`}
+                   checked={status}
+                   disabled={isEditing}
+                   onChange={() => toggleTodo(id)}
+                   className="appearance-none relative w-5 h-5 border border-neutral-300 rounded-md checked:bg-green-100 checked:border-green-400 transition-colors duration-200 cursor-pointer shrink-0"/>
             { title }
           </label>
-          <span className={`${isEditing ? 'hidden': 'flex'} ${priorityColors[priority]} py-0.5 px-1.5 uppercase rounded-sm text-[0.7rem] font-semibold select-none`}>
-              { priority }
+          <span className={`${isEditing ? 'hidden': 'flex'} ${priorityColors[priority]} py-0.25 px-1 md:py-0.5 md:px-1.5 uppercase rounded-sm text-xs md:text-[0.7rem] font-semibold select-none`}>
+            { isMobile ? priority.charAt(0) : priority }
           </span>
         </div>
         <input type="text"
