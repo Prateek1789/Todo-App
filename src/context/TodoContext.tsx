@@ -1,6 +1,7 @@
-import { useState, createContext, useContext, type ReactNode } from "react";
+import { useState, useEffect, createContext, useContext, type ReactNode } from "react";
 import useLocalStorage from "../hooks/useLocalStorage";
 
+const MOBILE_WIDTH = 600;
 export type Priority = 'low' | 'medium' | 'high';
 
 export interface TodoVals {
@@ -12,6 +13,7 @@ export interface TodoVals {
 };
 
 export interface ContextValues {
+    isMobile: boolean;
     todos: TodoVals[] | undefined;
     sortedTodos: TodoVals[];
     total: number;
@@ -35,6 +37,15 @@ export const AppProvider = ({ children }: ProviderProps) => {
     const total = todos.length;
     const completed = todos.filter(todo => todo.status).length;
     const [priority, setPriority] = useState<Priority>('low');
+    const [screenWidth, setScreenWidth] = useState<number>(window.innerWidth);
+    const isMobile = screenWidth <= MOBILE_WIDTH;
+
+    useEffect(() => {
+        const handleResize = () => setScreenWidth(window.innerWidth);
+        window.addEventListener('resize', handleResize);
+
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
 
     const sortedTodos: TodoVals[] = todos.sort((a, b) => {
         if (a.status !== b.status) return a.status ? 1 : -1;
@@ -78,7 +89,8 @@ export const AppProvider = ({ children }: ProviderProps) => {
     const deleteTodo = (id: number) => setTodos(prev => prev.filter(todo => todo.id !== id));
 
     return (
-        <TodoContext value={{ 
+        <TodoContext value={{
+            isMobile, 
             todos, 
             sortedTodos, 
             total, 
