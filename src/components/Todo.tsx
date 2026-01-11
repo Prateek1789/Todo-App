@@ -1,14 +1,18 @@
-import { useState, useRef, type KeyboardEvent } from "react";
+import { useState, type KeyboardEvent } from "react";
 import { useTodo } from "../context/TodoContext";
 import { Pencil, Trash2 } from "lucide-react";
 import { type TodoVals } from "../context/TodoContext";
 
-const Todo = ({ id, title, status }: TodoVals) => {
-
+const Todo = ({ id, title, status, priority }: TodoVals) => {
   const { updateTodo, toggleTodo, deleteTodo } = useTodo();
   const [isEditing, setEditing] = useState(false);
   const [editingText, setEditingText] = useState(title);
-  const todoRef = useRef<HTMLDivElement | null>(null);
+
+  const priorityColors = {
+    low: 'bg-blue-50 text-blue-500',
+    medium: 'bg-amber-50 text-amber-500 ',
+    high: 'bg-red-50 text-red-500',
+  };
 
   const updateTitle = () => {
     updateTodo(id, editingText);
@@ -21,27 +25,31 @@ const Todo = ({ id, title, status }: TodoVals) => {
   };
 
   return (
-    <div ref={todoRef}
-         data-id={id}
+    <div data-id={id}
          className={`w-full h-full px-6 flex justify-between rounded-2xl bg-background shadow-lg shadow-neutral-300`}>
-      <div className="h-full w-full py-2 flex items-center gap-4">
-        <input type="checkbox" 
-               name="todo-check"
-               id={`check-todo-${id}`}
-               checked={status}
-               disabled={isEditing}
-               onChange={() => toggleTodo(id)}
-               className="appearance-none relative w-5 h-5 border border-neutral-300 rounded-md checked:bg-green-100 checked:border-green-400 peer transition-colors duration-200 cursor-pointer"/>
-        <label htmlFor={`check-todo-${id}`}
-               className={`${isEditing ? 'hidden': 'block'} text-lg md:text-xl peer-checked:line-through peer-checked:text-neutral-400 peer-checked:text-sm peer-checked:select-none transition-all duration-200 cursor-pointer`}>
-          {title}
-        </label>
+      <div className="h-full w-full py-2 flex items-center gap-8">
+        <div className="flex items-center gap-2">
+          <label htmlFor={`check-todo-${id}`}
+                 className={`${isEditing ? 'hidden': 'flex'} gap-4 items-center text-lg md:text-xl has-checked:line-through has-checked:text-neutral-400 has-checked:text-sm has-checked:select-none transition-all duration-200 cursor-pointer peer`}>
+            <input type="checkbox" 
+                 name="todo-check"
+                 id={`check-todo-${id}`}
+                 checked={status}
+                 disabled={isEditing}
+                 onChange={() => toggleTodo(id)}
+                 className="appearance-none relative w-5 h-5 border border-neutral-300 rounded-md checked:bg-green-100 checked:border-green-400 transition-colors duration-200 cursor-pointer"/>
+            { title }
+          </label>
+          <span className={`${isEditing ? 'hidden': 'flex'} ${priorityColors[priority]} py-0.5 px-1.5 uppercase rounded-sm text-[0.7rem] font-semibold select-none`}>
+              { priority }
+          </span>
+        </div>
         <input type="text"
                autoFocus
                value={editingText}
                name="editing_input" 
                id={`editing-input-${id}`} 
-               className={`${isEditing ? "block" : "hidden"} border-0 outline-0 border-b border-blue-400`}
+               className={`${isEditing ? "block" : "hidden"} w-1/2 border-0 outline-0 border-b border-blue-400`}
                onChange={(e) => setEditingText(e.target.value)}
                onKeyDown={handleEnter} />
       </div>
