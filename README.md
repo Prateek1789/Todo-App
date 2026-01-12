@@ -1,8 +1,13 @@
 # Todo App - A simple React CRUD Todo App   
 
-A Frontend Todo app built with React + Typescript, featuring CRUD operations, priority based system for tasks and responsive UI built with Tailwind CSS.  
+![Design preview for Noto notes app](./public/TodoAppPreview.png)    
 
-# Features
+A Frontend Todo app built with React + Typescript, featuring CRUD operations, priority based system for tasks and responsive UI built with Tailwind CSS. 
+
+# Live Preview  
+[Todo App](https://prateek1789.github.io/Todo-App/)       
+
+# App Features   
 
 - Create, Read, Update and Delete tasks/todos.   
 - Assign Priority to a task by choosing between: Low, Medium or High.   
