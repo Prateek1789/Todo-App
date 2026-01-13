@@ -44,14 +44,15 @@ const Todo = ({ id, title, status, priority }: TodoVals) => {
             { isMobile ? priority.charAt(0) : priority }
           </span>
         </div>
-        <input type="text"
-               autoFocus
-               value={editingText}
-               name="editing_input" 
-               id={`editing-input-${id}`} 
-               className={`${isEditing ? "block" : "hidden"} w-1/2 border-0 outline-0 border-b border-blue-400`}
-               onChange={(e) => setEditingText(e.target.value)}
-               onKeyDown={handleEnter} />
+        { isEditing &&
+          (<input type="text"
+                  autoFocus={true}
+                  value={editingText}
+                  name="editing_input" 
+                  id={`editing-input-${id}`} 
+                  className="w-1/2 border-0 outline-0 border-b-2 border-blue-400"
+                  onChange={(e) => setEditingText(e.target.value)}
+                  onKeyDown={handleEnter} />) }
       </div>
       <div className="h-full py-2 flex items-center gap-2 rounded-md">
         <button type="button"
